@@ -1,3 +1,5 @@
-export const BUG_ADDED = 'bugAdded';
-export const BUG_REMOVED = 'bugRemoved';
-export const BUG_RESOLVED = 'bugResolved';
+import { createAction } from "@reduxjs/toolkit";
+
+export const bugAdded = createAction("bugAdded");
+export const bugRemoved = createAction("bugRemoved");
+export const bugResolved = createAction("bugResolved");

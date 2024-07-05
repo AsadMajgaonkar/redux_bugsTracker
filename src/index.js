@@ -1,6 +1,6 @@
 
-import * as actions from "./store/bugs/actionCreators"
 import bugStore from "./store/bugs/configureStore";
+import { bugAdded, bugRemoved, bugResolved } from "./store/bugs/actionTypes";
 const store = bugStore()
 
 
@@ -10,13 +10,16 @@ const store = bugStore()
 
 // const store = createStore(reducer);
 
-console.log(store.getState());
+
 
 // const unsubscribe = store.subscribe(()=>{console.log("subscribe called", store.getState())})
 
-store.dispatch(actions.bugAdded("my first bug"))
+store.dispatch(bugAdded({description:"my first bug"}))
+store.dispatch(bugAdded({description:"second bug"}))
+store.dispatch(bugResolved({id:2}))
 
 // unsubscribe()
+console.log(store.getState());
 
-store.dispatch(actions.bugAdded("my second bug"))
+// store.dispatch(actions.bugAdded("my second bug"))
 
