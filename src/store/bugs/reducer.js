@@ -1,24 +1,36 @@
 
-import * as actions from './actionTypes'
+import { createSlice } from "@reduxjs/toolkit";
 
-let lastId = 0;
+const state = [];
 
-export default function reducer(state = [], action){
-    if(action.type==actions.bugAdded.type){
-        return [...state, {
-            id: ++lastId,
-            description : action.payload.description,
-            resolved: false
-        }]
+const slice = createSlice({
+    name:"bugStore",
+    initialState:state,
+    reducers:{
+
+        bugRecieved:(state, action)=>{
+            return state = action.payload;
+        },
+
+        addBug:(state, action)=>{
+            return state = [...state, action.payload]
+        },
+
+        removeBug:(state, action)=>{
+            return state.filter(bug => bug.id != action.payload.id)
+        },
+
+        resolveBug:(state, action)=>{
+            return state.map(bug => bug.id!=action.payload.id? bug : {...bug, resolved:true})
+        },
+
+        assignBug:(state, action)=>{
+            return state.map( bug => bug.id!=action.payload.id ? bug : {
+                ...bug, userId:action.payload.userId
+            })
+        }
     }
+})
 
-    else if (action.type==actions.bugRemoved.type){
-        return state.filter(bug => bug.id != action.payload.id)
-    }
-
-    else if(action.type==actions.bugResolved.type){
-        return state.map(bug => bug.id!=action.payload.id? bug : {...bug, resolved:true})
-    }
-
-    return state;
-}
+export const {addBug, removeBug, resolveBug, assignBug, bugRecieved} = slice.actions;
+export default slice.reducer
